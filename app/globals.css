@@ -11,6 +11,12 @@
   --color-text-secondary: #999999;
   --color-text-muted: #666666;
 
+  /* Tier palette — one hue per tier, used by Sidebar + TierBadge + PageHeader */
+  --tier-a: #e2c275;     /* warm gold — Day 1 */
+  --tier-b: #9dc088;     /* sage — Week 2 */
+  --tier-c: #a89bd3;     /* muted lavender — Power user */
+  --tier-ref: #d6a78b;   /* terracotta — Reference */
+
   --font-body: var(--font-body), 'Inter', sans-serif;
   --font-display: var(--font-display), 'Space Grotesk', sans-serif;
   --font-mono: var(--font-mono), 'JetBrains Mono', monospace;
