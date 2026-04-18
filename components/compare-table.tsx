@@ -1,5 +1,5 @@
 export interface CompareRow {
-  label: string;
+  label: React.ReactNode;
   left: React.ReactNode;
   right: React.ReactNode;
 }
@@ -22,7 +22,7 @@ export function CompareTable({
       </div>
       {rows.map((row, i) => (
         <div
-          key={row.label}
+          key={i}
           className={`grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_minmax(0,1.3fr)] text-sm font-[family-name:var(--font-body)] ${
             i > 0 ? 'border-t border-[var(--color-border)]' : ''
           }`}
