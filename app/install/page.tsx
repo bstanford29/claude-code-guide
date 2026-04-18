@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PageHeader } from '@/components/page-header';
 import { CodeBlock } from '@/components/code-block';
 import { Callout } from '@/components/callout';
@@ -107,18 +108,9 @@ export default function InstallPage() {
           >
             claude.ai/download
           </a>
-          . It gives you a window with built-in session management, visual diff previews before edits land, and
-          parallel-session tabs &mdash; each session runs in its own isolated copy of your project.
+          . Sign in with the same Anthropic account; your Pro/Max plan applies to both surfaces. Open a project
+          folder and you&apos;re in &mdash; no terminal required.
         </p>
-
-        <div className="my-6 aspect-video rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[#0f0f0f] flex items-center justify-center">
-          <div className="text-center">
-            <div className="font-[family-name:var(--font-mono)] text-[11px] tracking-[0.15em] uppercase text-[#555]">
-              Desktop app screenshot
-            </div>
-            <div className="text-xs text-[#444] mt-1">Placeholder &mdash; real screenshot in polish phase</div>
-          </div>
-        </div>
       </section>
 
       <section className="mt-12 space-y-5">
@@ -227,16 +219,52 @@ export default function InstallPage() {
         </p>
       </section>
 
+      <section className="mt-14 space-y-4">
+        <h2 className="font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.01em] text-white">
+          Tour whichever one you&apos;ll actually use
+        </h2>
+        <p className="text-[#bbb] leading-relaxed">
+          Both options run the same AI. The UI is the only difference. Each tour shows what you see and what every
+          key or click does &mdash; pick the one that matches where you&apos;ll spend your time.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+          <Link
+            href="/terminal"
+            className="glass-card rounded-[var(--radius-md)] p-5 block group hover:border-[color:var(--color-primary)]/30"
+          >
+            <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[color:var(--tier-a)] mb-1">
+              Terminal tour
+            </div>
+            <div className="font-[family-name:var(--font-display)] font-bold text-white text-lg mb-1 group-hover:text-[color:var(--color-primary)] transition-colors">
+              Shortcuts, menus, keys &rarr;
+            </div>
+            <div className="text-[#888] text-xs">10 keyboard shortcuts · slash menu · @file completion · verbose mode</div>
+          </Link>
+          <Link
+            href="/desktop-app"
+            className="glass-card rounded-[var(--radius-md)] p-5 block group hover:border-[color:var(--color-primary)]/30"
+          >
+            <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[color:var(--tier-a)] mb-1">
+              Desktop app tour
+            </div>
+            <div className="font-[family-name:var(--font-display)] font-bold text-white text-lg mb-1 group-hover:text-[color:var(--color-primary)] transition-colors">
+              Windows, tabs, visual diffs &rarr;
+            </div>
+            <div className="text-[#888] text-xs">UI panels · parallel session tabs · drag-and-drop · session history</div>
+          </Link>
+        </div>
+      </section>
+
       <section className="mt-14 pt-8 border-t border-[var(--color-border)]">
         <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[#555] mb-2">
-          Next
+          Then
         </div>
-        <a
+        <Link
           href="/first-session"
           className="font-[family-name:var(--font-display)] font-bold text-lg text-white hover:text-[color:var(--color-primary)] transition-colors"
         >
           Your first session &rarr;
-        </a>
+        </Link>
       </section>
     </>
   );

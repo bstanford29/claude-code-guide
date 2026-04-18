@@ -28,7 +28,9 @@ export const NAV_GROUPS: NavGroup[] = [
     title: 'Day 1',
     kicker: 'Tier A — get productive',
     routes: [
-      { href: '/install', label: 'Install', tier: 'A', status: 'live', subtitle: 'Terminal + desktop' },
+      { href: '/install', label: 'Install', tier: 'A', status: 'live', subtitle: 'Pick a path, set up' },
+      { href: '/terminal', label: 'Terminal tour', tier: 'A', status: 'live', subtitle: 'Shortcuts, menus, keys' },
+      { href: '/desktop-app', label: 'Desktop app tour', tier: 'A', status: 'live', subtitle: 'Windows, tabs, visual diffs' },
       { href: '/first-session', label: 'First session', tier: 'A', status: 'live', subtitle: 'Prompting, @files, rewind' },
       { href: '/permissions', label: 'Permissions', tier: 'A', status: 'live', subtitle: 'Safety tiers' },
       { href: '/claude-md', label: 'CLAUDE.md', tier: 'A', status: 'live', subtitle: "Brandon's annotated example" },
