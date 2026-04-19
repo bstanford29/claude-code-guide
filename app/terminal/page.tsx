@@ -35,9 +35,10 @@ claude`}</CodeBlock>
         </p>
 
         <Screenshot
-          caption="A fresh Claude Code session in the terminal"
-          spec="Full-terminal shot of: `cd ~/some-project && claude`. Shows the welcome banner, the project name in the header, the status line at the bottom, and a blank prompt with cursor. Zsh or iTerm2 with a dark theme works best."
-          aspect="16/9"
+          src="/screenshots/anthropic-terminal-prompt.webp"
+          alt="Claude Code running in a terminal — showing the mascot, version line, user prompt, and Claude exploring the codebase"
+          caption="Claude Code in the terminal · source: anthropic.com"
+          aspect="16/10"
         />
       </section>
 

@@ -43,9 +43,10 @@ export default function DesktopAppPage() {
           file viewer + diff preview.
         </p>
         <Screenshot
-          caption="Full desktop app window with all three panels visible"
-          spec="Desktop app screenshot at ~1440x900. Left sidebar shows 'Sessions' list (3-4 sessions named) + project tree below. Center panel: active chat with a few messages and a permission prompt pending. Right panel: side-by-side diff preview for a file about to be edited. Dark theme."
-          aspect="16/10"
+          src="/screenshots/anthropic-desktop-hero.png"
+          alt="Claude Code desktop app showing left sidebar with Code tab, session list (New session, Scheduled, Customize, Pinned, Recents), and the main empty canvas with the mascot"
+          caption="The desktop app on first launch · source: anthropic.com"
+          aspect="21/9"
         />
       </section>
 
