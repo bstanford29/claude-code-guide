@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import { Callout } from '@/components/callout';
 import { Screenshot } from '@/components/screenshot';
 import { CompareTable } from '@/components/compare-table';
+import { AppMockup, AppSidebar, AppTabs, AppMain, AppDiff } from '@/components/app-mockup';
 
 export const metadata = {
   title: 'Desktop app tour',
@@ -58,11 +59,50 @@ export default function DesktopAppPage() {
           The desktop app opens a project instead of a directory. First time: pick a folder. After that, recent
           projects appear in the left sidebar and one click resumes.
         </p>
-        <Screenshot
-          caption="Project picker — recent + pinned projects"
-          spec="Desktop app first-run or File→Open screen. Shows recent projects as cards with repo name, last-active timestamp, and a thumbnail/icon. 'Open folder' button prominent at bottom."
-          aspect="16/10"
-        />
+        <AppMockup caption="Project picker: recent + pinned projects, one click to resume" aspect="16/10">
+          <AppSidebar
+            sections={[
+              {
+                title: 'Sessions',
+                items: [{ label: 'New session', active: true }, { label: 'Scheduled' }, { label: 'Customize' }],
+              },
+              {
+                title: 'Pinned',
+                items: [
+                  { label: 'Build the alignment grid demo', accent: 'var(--tier-a)' },
+                  { label: 'Fix auth redirect bug', accent: 'var(--tier-b)' },
+                ],
+              },
+            ]}
+          />
+          <AppMain className="p-6 gap-4">
+            <div className="font-[family-name:var(--font-display)] text-xl font-bold text-white mb-1">Open a project</div>
+            <div className="text-xs text-[#888] mb-4 font-[family-name:var(--font-body)]">Recent</div>
+            <div className="grid grid-cols-2 gap-3 font-[family-name:var(--font-body)]">
+              {[
+                { name: 'client-x-research', when: '2 hours ago', branch: 'main' },
+                { name: 'q3-deck', when: 'yesterday', branch: 'feat/revision-3' },
+                { name: 'accenture-labs', when: '3 days ago', branch: 'main' },
+                { name: 'personal-site', when: 'last week', branch: 'main' },
+              ].map((p) => (
+                <div key={p.name} className="p-3 rounded border border-[#222] bg-[#121212]">
+                  <div className="text-sm text-white truncate">{p.name}</div>
+                  <div className="flex items-center gap-2 mt-1 text-[10px] text-[#666]">
+                    <span>{p.when}</span>
+                    <span>·</span>
+                    <span className="font-[family-name:var(--font-mono)]">{p.branch}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              disabled
+              className="mt-auto self-start px-3 py-1.5 rounded bg-[color:var(--color-primary)]/15 border border-[color:var(--color-primary)]/30 text-[color:var(--color-primary)] text-xs font-[family-name:var(--font-body)] font-semibold"
+            >
+              Open folder…
+            </button>
+          </AppMain>
+        </AppMockup>
       </section>
 
       <section className="mt-12 space-y-5">
@@ -75,11 +115,35 @@ export default function DesktopAppPage() {
           of the project. Tab over to session B while A is thinking. Run a writer in one, a reviewer in another.
           Ship two features in parallel.
         </p>
-        <Screenshot
-          caption="Three tabs open — each session working on a separate branch"
-          spec="Desktop app with 3 tabs visible at top of window. Tab 1: 'feature-auth' (active, in middle of a prompt). Tab 2: 'fix-checkout-bug' (idle, has a completed diff waiting). Tab 3: 'refactor-settings' (thinking indicator). Each tab has a color/branch label."
-          aspect="16/10"
-        />
+        <AppMockup caption="Three parallel sessions, each in its own git-worktree-isolated copy" aspect="16/10">
+          <AppMain>
+            <AppTabs
+              activeIndex={0}
+              tabs={[
+                { label: 'feature-auth', branch: 'worktree/auth', status: 'thinking' },
+                { label: 'fix-checkout-bug', branch: 'worktree/checkout', status: 'ready' },
+                { label: 'refactor-settings', branch: 'worktree/settings', status: 'idle' },
+              ]}
+            />
+            <div className="flex-1 p-5 space-y-3 font-[family-name:var(--font-body)] text-sm">
+              <div className="flex gap-3">
+                <span className="shrink-0 text-[color:var(--color-primary)] font-[family-name:var(--font-mono)] mt-0.5">&gt;</span>
+                <span className="text-white">Add OAuth callback with token refresh and session expiry.</span>
+              </div>
+              <div className="flex items-center gap-2 text-[#888] text-xs font-[family-name:var(--font-mono)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--color-primary)] animate-pulse" />
+                <span>Reading src/auth/session.ts…</span>
+              </div>
+              <div className="text-[#aaa] pl-4 border-l border-[#222]">
+                I&apos;ll add a <code className="text-[color:var(--color-primary)]">refresh()</code> handler and
+                wire it into the middleware. Check before edit incoming.
+              </div>
+              <div className="mt-2 p-2.5 rounded border border-[#222] bg-[#0f0f0f] text-xs text-[#888]">
+                Tip: tab 2 finished — diff waiting for your review.
+              </div>
+            </div>
+          </AppMain>
+        </AppMockup>
         <Callout variant="tip" title="How it works underneath">
           Each tab uses a git worktree behind the scenes &mdash; same mechanism as{' '}
           <Link href="/worktrees" className="text-[color:var(--color-primary)] hover:underline">
@@ -100,11 +164,28 @@ export default function DesktopAppPage() {
           in place. Compared to reading a unified diff in the terminal, this is where the desktop app earns its
           keep for most people.
         </p>
-        <Screenshot
-          caption="Side-by-side diff preview with accept/reject bar at the bottom"
-          spec="Desktop app right panel showing a file diff: left column 'Current' with original code; right column 'Proposed' with Claude's changes. Changed lines have a subtle green/red background. Bottom of the panel has three buttons: Reject · Edit · Accept. Filename shows at the top."
-          aspect="16/10"
-        />
+        <AppMockup caption="Side-by-side diff — current on the left, proposed on the right, action bar at the bottom" aspect="16/9">
+          <AppMain>
+            <AppDiff
+              filename="src/app/api/health/route.ts"
+              oldLines={[
+                { text: 'export async function GET() {' },
+                { text: '  return Response.json({', changed: true },
+                { text: '    status: \u201cok\u201d', changed: true },
+                { text: '  })' },
+                { text: '}' },
+              ]}
+              newLines={[
+                { text: 'export async function GET() {' },
+                { text: '  return Response.json({', changed: true },
+                { text: '    status: \u201cok\u201d,', changed: true },
+                { text: '    time: new Date().toISOString()', changed: true },
+                { text: '  })' },
+                { text: '}' },
+              ]}
+            />
+          </AppMain>
+        </AppMockup>
       </section>
 
       <section className="mt-12 space-y-5">
@@ -115,11 +196,26 @@ export default function DesktopAppPage() {
           Drop a screenshot, mockup, or PDF straight into the prompt. No paste dance, no file path. Works for
           multiple files at once &mdash; drag three mockups in and ask Claude to compare them.
         </p>
-        <Screenshot
-          caption="Dragging a PNG mockup into the prompt box"
-          spec="Desktop app with a file being dragged over the prompt box. Prompt shows a dashed drop zone overlay with 'Drop to attach' text. Cursor shows a file being held, a thumbnail preview of the image visible under cursor."
-          aspect="16/10"
-        />
+        <AppMockup caption="Dragging an image into the prompt — drop zone is any file, any count, any order" aspect="16/10">
+          <AppMain>
+            <div className="flex-1 p-6 font-[family-name:var(--font-body)] flex flex-col">
+              <div className="flex gap-3 mb-5">
+                <span className="shrink-0 text-[color:var(--color-primary)] font-[family-name:var(--font-mono)] text-sm mt-0.5">&gt;</span>
+                <span className="text-white text-sm">Here&apos;s the deck I&apos;m working on — rewrite the slide headlines as claims, not topics.</span>
+              </div>
+              <div className="flex-1 border-2 border-dashed border-[color:var(--color-primary)]/60 rounded-lg bg-[color:var(--color-primary)]/5 flex items-center justify-center relative overflow-hidden">
+                {/* Ghost thumbnail */}
+                <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[160px] h-[110px] rounded bg-[#1a1a1a] border border-[#333] shadow-2xl opacity-80 rotate-[-4deg] flex items-center justify-center">
+                  <span className="font-[family-name:var(--font-mono)] text-[9px] text-[#666] uppercase tracking-[0.1em]">q3-strategy.pptx</span>
+                </div>
+                <div className="text-center relative z-10 mt-16">
+                  <div className="font-[family-name:var(--font-display)] text-xl text-[color:var(--color-primary)] mb-1">Drop to attach</div>
+                  <div className="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.1em] text-[#888]">or paste · Cmd+V</div>
+                </div>
+              </div>
+            </div>
+          </AppMain>
+        </AppMockup>
       </section>
 
       <section className="mt-12 space-y-5">
@@ -135,11 +231,64 @@ export default function DesktopAppPage() {
           in the terminal) &mdash; you can visually scrub back to any point and restore conversation, code, or
           both.
         </p>
-        <Screenshot
-          caption="Session history sidebar with a selected session expanded to show checkpoints"
-          spec="Desktop app left sidebar zoomed. Sessions listed with one selected and expanded into a timeline view: each row is a checkpoint with a timestamp and one-line summary ('Added /health endpoint', 'Reverted test changes'). A 'Restore to here' button appears on hover."
-          aspect="4/5"
-        />
+        <AppMockup caption="Session history with a selected session expanded to a checkpoint timeline" aspect="4/3">
+          <AppSidebar
+            sections={[
+              {
+                title: 'Recents',
+                items: [
+                  { label: 'feature-auth', accent: 'var(--tier-a)', active: true, subtle: 'now' },
+                  { label: 'fix-checkout-bug', accent: 'var(--tier-b)', subtle: '1h' },
+                  { label: 'Q3 deck revision', accent: 'var(--tier-c)', subtle: '4h' },
+                  { label: 'inbox triage', accent: 'var(--tier-ref)', subtle: '1d' },
+                ],
+              },
+            ]}
+          />
+          <AppMain className="p-5 font-[family-name:var(--font-body)]">
+            <div className="font-[family-name:var(--font-display)] text-base font-bold text-white mb-3">
+              feature-auth <span className="text-xs text-[#666] font-normal ml-2 font-[family-name:var(--font-mono)]">worktree/auth</span>
+            </div>
+            <div className="font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.15em] text-[#555] mb-3">
+              Checkpoints
+            </div>
+            <div className="space-y-0 relative before:content-[''] before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-px before:bg-[#2a2a2a]">
+              {[
+                { time: '14:31', label: 'Added /health endpoint', active: true },
+                { time: '14:18', label: 'Added refresh() in auth/session.ts' },
+                { time: '13:52', label: 'Reverted test changes' },
+                { time: '13:41', label: 'Initial plan accepted' },
+                { time: '13:33', label: 'Session started' },
+              ].map((cp, i) => (
+                <div key={i} className="flex items-start gap-3 pl-0 py-2 relative">
+                  <span
+                    className={[
+                      'w-3.5 h-3.5 rounded-full shrink-0 mt-0.5 z-10 border-2',
+                      cp.active
+                        ? 'bg-[color:var(--color-primary)] border-[color:var(--color-primary)]'
+                        : 'bg-[#0d0d0d] border-[#444]',
+                    ].join(' ')}
+                    aria-hidden
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-[family-name:var(--font-mono)] text-[10px] text-[#666]">{cp.time}</span>
+                      <span className={`text-xs ${cp.active ? 'text-white font-semibold' : 'text-[#aaa]'}`}>{cp.label}</span>
+                    </div>
+                  </div>
+                  {cp.active && (
+                    <button
+                      disabled
+                      className="px-2 py-0.5 rounded border border-[color:var(--color-primary)]/30 bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)] text-[9px] uppercase tracking-wider font-[family-name:var(--font-mono)]"
+                    >
+                      Restore
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </AppMain>
+        </AppMockup>
       </section>
 
       <section className="mt-12 space-y-5">

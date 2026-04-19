@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import { CodeBlock } from '@/components/code-block';
 import { Callout } from '@/components/callout';
 import { Screenshot } from '@/components/screenshot';
+import { TerminalMockup, TermLine, TermPrompt, TermCaret, TermMenu } from '@/components/terminal-mockup';
 
 export const metadata = {
   title: 'Terminal tour',
@@ -77,11 +78,29 @@ claude`}</CodeBlock>
           {' '}at the start of a prompt and a fuzzy-matched menu appears. Keep typing to narrow it down, Tab to
           accept, Enter to run. No need to memorize command names.
         </p>
-        <Screenshot
-          caption="Slash menu after typing /"
-          spec="Terminal shot of a session with just `/` typed. Shows the filterable list of slash commands (/help, /clear, /compact, /cost, /effort, etc.) with the first one highlighted. Cursor visible in the prompt."
-          aspect="16/9"
-        />
+        <TerminalMockup title="claude · ~/your-project" caption="Slash menu: type / to fuzzy-filter every slash command">
+          <TermLine muted>Claude Code v2.1.76 · /Users/you/your-project</TermLine>
+          <div className="mt-3">
+            <TermPrompt>
+              /<TermCaret />
+            </TermPrompt>
+          </div>
+          <TermMenu
+            header="slash commands · fuzzy match"
+            activeIndex={0}
+            items={[
+              { label: '/help', hint: 'list every command' },
+              { label: '/clear', hint: 'reset conversation context' },
+              { label: '/compact', hint: 'summarize to free context' },
+              { label: '/cost', hint: 'session cost + plan usage' },
+              { label: '/effort', hint: 'set thinking depth' },
+              { label: '/permissions', hint: 'view or edit allowlist' },
+              { label: '/rewind', hint: 'restore a prior checkpoint' },
+              { label: '/agents', hint: 'browse subagents' },
+            ]}
+          />
+          <TermLine muted>Tab to accept · Enter to run · Esc to dismiss</TermLine>
+        </TerminalMockup>
 
         <h3 className="font-[family-name:var(--font-display)] italic text-xl text-white mt-8">
           @file completion
@@ -91,11 +110,26 @@ claude`}</CodeBlock>
           inside a prompt and Claude Code offers fuzzy-matched filenames from your project. Tab to complete. Works
           for files and directories.
         </p>
-        <Screenshot
-          caption="@-completion after typing @src/au"
-          spec='Terminal shot mid-prompt: "explain @src/au" with a dropdown showing matched files like @src/auth.ts, @src/auth/, @src/auth/login.ts. The prompt text continues after the dropdown dismisses.'
-          aspect="16/9"
-        />
+        <TerminalMockup title="claude · ~/your-project" caption="@file completion: type @ and get fuzzy-matched paths from your project">
+          <TermLine muted>Claude Code v2.1.76 · /Users/you/your-project</TermLine>
+          <div className="mt-3">
+            <TermPrompt>
+              explain @src/au<TermCaret />
+            </TermPrompt>
+          </div>
+          <TermMenu
+            header="files · matches for 'au'"
+            activeIndex={1}
+            items={[
+              { label: '@src/auth.ts', hint: '1.2 KB · TypeScript' },
+              { label: '@src/auth/', hint: 'directory · 8 files' },
+              { label: '@src/auth/login.ts', hint: '0.8 KB · TypeScript' },
+              { label: '@src/auth/session.ts', hint: '2.1 KB · TypeScript' },
+              { label: '@src/audit.ts', hint: '0.4 KB · TypeScript' },
+            ]}
+          />
+          <TermLine muted>Tab to accept · referenced files are read before Claude responds</TermLine>
+        </TerminalMockup>
       </section>
 
       <section className="mt-12 space-y-5">
@@ -147,11 +181,23 @@ Allow? (y/n/e to edit, a to always allow)`}</CodeBlock>
             <span className="text-[#bbb] text-sm">Convincing a skeptical colleague that the model isn&apos;t just bullshitting</span>
           </li>
         </ul>
-        <Screenshot
-          caption="Verbose mode showing Claude's internal thinking (gray italic) followed by the answer"
-          spec='Terminal shot of a completed prompt with Ctrl+O toggled on. Upper half is gray italic text: "Let me check the config... looking at src/config.ts... I see the env vars are loaded via..." Lower half is the clean answer in normal text.'
-          aspect="16/9"
-        />
+        <TerminalMockup title="claude · ~/your-project · verbose" caption="Verbose mode (Ctrl+O): thinking in gray italic, answer in normal text">
+          <TermPrompt>why does our auth silently fail after 24 hours?</TermPrompt>
+          <div className="mt-3 pl-4 border-l border-[#222]">
+            <TermLine italic>Let me read @src/auth/session.ts and look at the token lifetime...</TermLine>
+            <TermLine italic>The refresh-token TTL is 24h but I don&apos;t see any auto-refresh logic.</TermLine>
+            <TermLine italic>Checking middleware now for silent failure handling...</TermLine>
+            <TermLine italic>Middleware catches 401 but doesn&apos;t distinguish from network errors.</TermLine>
+            <TermLine italic>The root cause is the silent catch. The 24h matches the TTL.</TermLine>
+          </div>
+          <div className="mt-3">
+            <TermLine accent>● Root cause: auth/middleware.ts:47 swallows 401 from expired refresh tokens</TermLine>
+            <TermLine>The middleware catches every non-200 and renders the home page, so an</TermLine>
+            <TermLine>expired refresh token looks identical to &ldquo;not logged in.&rdquo; Fix: branch on</TermLine>
+            <TermLine>status === 401 and redirect to /login instead of silently dropping.</TermLine>
+          </div>
+          <TermLine muted>Ctrl+O to hide thinking · thinking tokens still counted</TermLine>
+        </TerminalMockup>
       </section>
 
       <section className="mt-12 space-y-5">
