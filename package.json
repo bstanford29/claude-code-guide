@@ -1,12 +1,13 @@
 {
-  "name": "claude-code-guide",
+  "name": "ai-coding-agent-guide",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:routes": "node scripts/check-routes.mjs"
   },
   "dependencies": {
     "next": "16.2.3",

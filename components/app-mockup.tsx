@@ -1,26 +1,28 @@
+import type { CSSProperties, ReactNode } from 'react';
+
 export function AppMockup({
   caption,
   children,
   aspect = '16/10',
 }: {
   caption: string;
-  children: React.ReactNode;
+  children: ReactNode;
   aspect?: string;
 }) {
   return (
     <figure className="my-6">
       <div
-        className="rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)] bg-[#0d0d0d] shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
-        style={{ aspectRatio: aspect }}
+        className="flex min-h-[460px] flex-col rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)] bg-[#0d0d0d] shadow-[0_4px_24px_rgba(0,0,0,0.35)] sm:min-h-0 sm:aspect-[var(--mockup-aspect)]"
+        style={{ '--mockup-aspect': aspect } as CSSProperties}
       >
         {/* Traffic-lights title bar */}
-        <div className="flex items-center gap-1.5 px-3.5 py-2 bg-[#0a0a0a] border-b border-[#1a1a1a]">
+        <div className="flex shrink-0 items-center gap-1.5 px-3.5 py-2 bg-[#0a0a0a] border-b border-[#1a1a1a]">
           <span className="w-2.5 h-2.5 rounded-full bg-[#3a3a3a]" />
           <span className="w-2.5 h-2.5 rounded-full bg-[#3a3a3a]" />
           <span className="w-2.5 h-2.5 rounded-full bg-[#3a3a3a]" />
         </div>
         {/* Window content */}
-        <div className="h-[calc(100%-32px)] flex">{children}</div>
+        <div className="flex min-h-0 flex-1 overflow-auto sm:overflow-hidden">{children}</div>
       </div>
       <figcaption className="font-[family-name:var(--font-mono)] text-[11px] text-[#666] mt-2 px-1">
         {caption}
@@ -115,7 +117,7 @@ function StatusDot({ status }: { status: 'idle' | 'thinking' | 'ready' }) {
   );
 }
 
-export function AppMain({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function AppMain({ children, className = '' }: { children: ReactNode; className?: string }) {
   return <div className={`flex-1 min-w-0 flex flex-col ${className}`}>{children}</div>;
 }
 

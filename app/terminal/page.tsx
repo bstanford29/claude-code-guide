@@ -256,12 +256,20 @@ Allow? (y/n/e to edit, a to always allow)`}</CodeBlock>
         <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[#555] mb-2">
           Next
         </div>
-        <Link
-          href="/desktop-app"
-          className="font-[family-name:var(--font-display)] font-bold text-lg text-white hover:text-[color:var(--color-primary)] transition-colors"
-        >
-          The desktop app &rarr;
-        </Link>
+        <div className="flex flex-wrap gap-4">
+          <Link
+            href="/desktop-app"
+            className="font-[family-name:var(--font-display)] font-bold text-lg text-white hover:text-[color:var(--color-primary)] transition-colors"
+          >
+            The desktop app &rarr;
+          </Link>
+          <Link
+            href="/claude-ide"
+            className="font-[family-name:var(--font-display)] font-bold text-lg text-[#888] hover:text-white transition-colors"
+          >
+            IDE setup &rarr;
+          </Link>
+        </div>
       </section>
     </>
   );

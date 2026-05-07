@@ -1,158 +1,156 @@
 import Link from 'next/link';
-import { NAV_GROUPS, tierColor } from '@/lib/nav';
+import { NAV_GROUPS } from '@/lib/nav';
 import { Badge } from '@/components/badge';
-import { CodeBlock } from '@/components/code-block';
+import { DecisionGrid } from '@/components/decision-grid';
+import { SurfaceMatrix } from '@/components/surface-matrix';
+
+const surfaceColumns = [
+  { key: 'cli', title: 'CLI', subtitle: 'Terminal-first local work' },
+  { key: 'app', title: 'Desktop app', subtitle: 'Parallel visual work' },
+  { key: 'ide', title: 'IDE', subtitle: 'Editor-native context' },
+  { key: 'cloud', title: 'Web/cloud', subtitle: 'Background delegation' },
+];
+
+const surfaceRows = [
+  {
+    label: 'Claude Code',
+    values: {
+      cli: 'Mature terminal workflow with permissions, slash commands, memory, MCP, hooks, and automation.',
+      app: 'Good for visual diffs, tabs, screenshots, and people who prefer a window over a terminal.',
+      ide: 'VS Code and JetBrains integration for selected text, diagnostics, and IDE diff viewing.',
+      cloud: 'Use local CLI/app patterns first; this guide treats Claude Code as local-first.',
+    },
+  },
+  {
+    label: 'Codex',
+    values: {
+      cli: 'Local TUI that can inspect, edit, run commands, use MCP, review code, search the web, and launch cloud tasks.',
+      app: 'Desktop command center for parallel local threads, worktrees, automations, browser flows, and git review.',
+      ide: 'Sidebar extension for VS Code, Cursor, Windsurf, and JetBrains with local and cloud handoff.',
+      cloud: 'Background tasks connected to GitHub that can propose changes and pull requests.',
+    },
+  },
+];
 
 export default function HomePage() {
-  const tiers = NAV_GROUPS.filter((g) => g.tier !== 'home');
+  const claudeGroups = NAV_GROUPS.filter((g) => g.product === 'claude');
+  const codexGroups = NAV_GROUPS.filter((g) => g.product === 'codex');
 
   return (
     <>
-      {/* Hero */}
       <section className="relative pb-14 border-b border-[var(--color-border)] mb-14">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse,rgba(117,214,214,0.04)_0%,transparent_70%)] pointer-events-none -z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[820px] h-[420px] bg-[radial-gradient(ellipse,rgba(117,214,214,0.05)_0%,transparent_70%)] pointer-events-none -z-10" />
 
         <div className="flex items-center gap-3 mb-5 flex-wrap">
           <Badge label="Training guide" />
-          <Badge label="Updated 2026" />
+          <Badge label="Claude Code" />
+          <Badge label="Codex" />
         </div>
 
         <h1 className="font-[family-name:var(--font-display)] font-extrabold text-[clamp(2.25rem,5vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-white">
-          Getting started with
+          AI coding agents,
           <br />
-          <span className="hero-text-mask">Claude Code</span>
+          <span className="hero-text-mask">from first install to power workflows</span>
         </h1>
 
-        <p className="mt-5 text-[var(--color-text-secondary)] text-base leading-relaxed max-w-[620px] font-[family-name:var(--font-body)]">
-          Claude Code is an AI coding assistant that lives in your terminal &mdash; and now on your desktop. You describe
-          what you want in plain English, and it reads your files, writes code, runs commands, and builds things for
-          you. This guide takes you from zero to productive.
+        <p className="mt-5 text-[var(--color-text-secondary)] text-base leading-relaxed max-w-[680px] font-[family-name:var(--font-body)]">
+          A practical guide to Claude Code and OpenAI Codex across CLI, desktop app, IDE, and cloud workflows. Start
+          with one track, then use the comparison pages when you need to choose the right surface for a real task.
         </p>
 
-        <div className="flex flex-wrap gap-2 mt-7">
-          <Badge label="Terminal-native" />
-          <Badge label="Reads your codebase" />
-          <Badge label="Runs commands" />
-          <Badge label="Git-aware" />
-          <Badge label="Skills + hooks + MCP" />
+        <div className="flex flex-wrap gap-3 mt-8 text-sm">
+          <Link
+            href="/install"
+            className="rounded border border-[color:var(--color-primary)]/35 bg-[color:var(--color-primary)]/10 px-4 py-2 text-[color:var(--color-primary)] font-semibold hover:bg-[color:var(--color-primary)]/15 transition-colors"
+          >
+            Start with Claude Code
+          </Link>
+          <Link
+            href="/codex/install"
+            className="rounded border border-[var(--color-border)] px-4 py-2 text-[#ddd] font-semibold hover:border-[var(--color-border-hover)] hover:bg-[#141414] transition-colors"
+          >
+            Start with Codex
+          </Link>
+          <Link href="/choose" className="px-2 py-2 text-[#888] hover:text-white transition-colors">
+            Help me choose
+          </Link>
         </div>
       </section>
 
-      {/* Start-here CTA */}
       <section className="mb-14">
-        <div className="glass-card rounded-[var(--radius-lg)] p-6 md:p-8 relative overflow-hidden">
-          <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.15em] uppercase text-[color:var(--color-primary)] mb-2">
-            Start here
-          </div>
-          <h2 className="font-[family-name:var(--font-display)] font-bold text-xl md:text-2xl tracking-[-0.01em] mb-2">
-            New to Claude Code? Install first.
-          </h2>
-          <p className="font-[family-name:var(--font-body)] text-sm text-[var(--color-text-secondary)] mb-5 max-w-[560px]">
-            Two minutes to working. Then try the first-session walkthrough.
-          </p>
-          <CodeBlock>{`npm install -g @anthropic-ai/claude-code && claude`}</CodeBlock>
-          <div className="flex flex-wrap gap-3 mt-4 text-sm">
-            <Link href="/install" className="text-[color:var(--color-primary)] hover:underline font-medium">
-              Full install guide &rarr;
-            </Link>
-            <Link href="/first-session" className="text-[#888] hover:text-white">
-              Or skip to your first session
-            </Link>
-          </div>
-        </div>
+        <DecisionGrid
+          items={[
+            {
+              eyebrow: 'Claude Code track',
+              title: 'Best when you want a mature Claude-first local workflow',
+              href: '/install',
+              body: 'Use this path for terminal-native work, project memory, slash commands, hooks, MCP servers, subagents, worktrees, and the Claude desktop app.',
+            },
+            {
+              eyebrow: 'Codex track',
+              title: "Best when you want OpenAI's local, IDE, app, and cloud agent workflows",
+              href: '/codex/install',
+              body: 'Use this path for Codex CLI, the desktop app, IDE extension, web/cloud tasks, AGENTS.md, app automations, and GitHub delegation.',
+            },
+          ]}
+        />
       </section>
 
-      {/* Tier-grouped TOC */}
-      <section className="space-y-10">
-        <div>
-          <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.15em] uppercase text-[#555] mb-3">
-            What&apos;s in the guide
-          </div>
-          <p className="font-[family-name:var(--font-body)] text-sm text-[var(--color-text-secondary)] max-w-[620px] leading-relaxed">
-            Three tiers, in order. Day 1 gets you productive. Week 2 makes you fast. Power user is for when you want
-            to build processes, not just prompts.
-          </p>
+      <section className="mb-14">
+        <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.15em] uppercase text-[#555] mb-3">
+          App vs CLI vs IDE
         </div>
+        <h2 className="font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.01em] text-white">
+          Pick the surface by the work, not by habit.
+        </h2>
+        <p className="mt-2 font-[family-name:var(--font-body)] text-sm text-[var(--color-text-secondary)] max-w-[680px] leading-relaxed">
+          The same agent can feel very different depending on where you run it. The CLI is efficient, the app is visual
+          and parallel, the IDE is contextual, and cloud is for background delegation.
+        </p>
+        <SurfaceMatrix columns={surfaceColumns} rows={surfaceRows} />
+      </section>
 
-        {tiers.map((group) => (
-          <div key={group.tier}>
-            <div className="flex items-baseline gap-3 mb-4 pb-2 border-b border-[var(--color-border)]">
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: tierColor(group.tier) }}
-                aria-hidden
-              />
-              <h2 className="font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.01em]">
-                {group.title}
-              </h2>
-              <span className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[#555]">
-                {group.kicker}
-              </span>
-            </div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <TrackSection title="Claude Code" groups={claudeGroups} />
+        <TrackSection title="Codex" groups={codexGroups} />
+      </section>
+    </>
+  );
+}
+
+function TrackSection({ title, groups }: { title: string; groups: typeof NAV_GROUPS }) {
+  return (
+    <div>
+      <div className="flex items-baseline gap-3 mb-4 pb-2 border-b border-[var(--color-border)]">
+        <h2 className="font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.01em]">{title}</h2>
+        <span className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[#555]">
+          Guide track
+        </span>
+      </div>
+      <div className="space-y-5">
+        {groups.map((group) => (
+          <div key={`${group.product}-${group.title}`}>
+            <h3 className="font-[family-name:var(--font-display)] text-xs uppercase tracking-[0.12em] text-[#777] mb-2">
+              {group.title}
+            </h3>
+            <ul className="space-y-1">
               {group.routes.map((route) => (
                 <li key={route.href}>
                   <Link
                     href={route.href}
-                    className="block p-3 rounded border border-transparent hover:border-[var(--color-border-hover)] hover:bg-[#121212] transition-colors group"
+                    className="block rounded border border-transparent px-3 py-2 hover:border-[var(--color-border-hover)] hover:bg-[#121212] transition-colors"
                   >
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-[family-name:var(--font-mono)] text-[10px] tracking-wider text-[#555] w-16 shrink-0 uppercase">
-                        {route.href}
-                      </span>
-                      <div className="min-w-0">
-                        <div className="font-[family-name:var(--font-body)] text-sm font-semibold text-[#ddd] group-hover:text-white transition-colors truncate">
-                          {route.label}
-                        </div>
-                        {route.subtitle && (
-                          <div className="font-[family-name:var(--font-body)] text-xs text-[#666] mt-0.5 truncate">
-                            {route.subtitle}
-                          </div>
-                        )}
-                      </div>
+                    <div className="font-[family-name:var(--font-body)] text-sm font-semibold text-[#ddd]">
+                      {route.label}
                     </div>
+                    {route.subtitle && <div className="text-xs text-[#666] mt-0.5">{route.subtitle}</div>}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
         ))}
-      </section>
-
-      {/* Footer */}
-      <footer className="mt-20 pt-6 border-t border-[var(--color-border)]">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-[#555]">
-          <span>
-            Written by{' '}
-            <a
-              href="https://brandonstanford.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#888] hover:text-[color:var(--color-primary)] transition-colors"
-            >
-              Brandon Stanford
-            </a>
-          </span>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://x.com/b__stanford"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#555] hover:text-[color:var(--color-primary)] transition-colors"
-            >
-              X
-            </a>
-            <a
-              href="https://www.linkedin.com/in/brandonistanford/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#555] hover:text-[color:var(--color-primary)] transition-colors"
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </footer>
-    </>
+      </div>
+    </div>
   );
 }

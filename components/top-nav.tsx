@@ -19,7 +19,7 @@ export function TopNav({ onMenuClick }: { onMenuClick: () => void }) {
             </svg>
           </button>
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-xs tracking-[0.15em] text-[#888] hover:text-[color:var(--color-primary)] uppercase transition-colors truncate">
-            Claude Code Guide
+            AI Coding Agent Guide
           </Link>
         </div>
         <a

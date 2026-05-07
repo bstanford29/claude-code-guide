@@ -23,21 +23,21 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Claude Code Guide',
-    template: '%s — Claude Code Guide',
+    default: 'AI Coding Agent Guide',
+    template: '%s - AI Coding Agent Guide',
   },
   description:
-    "A training reference for Claude Code — Anthropic's AI coding assistant. Install, first session, power features, skills, hooks, subagents, worktrees.",
+    "A practical guide to Claude Code and OpenAI Codex across CLI, desktop app, IDE, and cloud workflows.",
   openGraph: {
-    title: 'Claude Code Guide',
-    description: 'Everything you need to go from zero to productive with Claude Code.',
+    title: 'AI Coding Agent Guide',
+    description: 'Claude Code and Codex, from first install to power workflows.',
     type: 'website',
     images: [{ url: '/og-image.png' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Claude Code Guide',
-    description: 'Everything you need to go from zero to productive with Claude Code.',
+    title: 'AI Coding Agent Guide',
+    description: 'Claude Code and Codex, from first install to power workflows.',
     images: ['/og-image.png'],
   },
 };

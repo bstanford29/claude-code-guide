@@ -30,6 +30,34 @@ const OFFICIAL: Link[] = [
   },
 ];
 
+const CODEX: Link[] = [
+  {
+    title: 'OpenAI Codex docs',
+    desc: 'Official Codex docs for CLI, app, IDE extension, web/cloud, config, MCP, skills, and subagents.',
+    url: 'https://developers.openai.com/codex',
+  },
+  {
+    title: 'Codex CLI',
+    desc: 'Install and run Codex locally from the terminal.',
+    url: 'https://developers.openai.com/codex/cli',
+  },
+  {
+    title: 'Codex app',
+    desc: 'Desktop app docs for local threads, worktrees, automations, review, and computer use.',
+    url: 'https://developers.openai.com/codex/app',
+  },
+  {
+    title: 'Codex IDE extension',
+    desc: 'Setup for VS Code, Cursor, Windsurf, and JetBrains IDE workflows.',
+    url: 'https://developers.openai.com/codex/ide',
+  },
+  {
+    title: 'Codex web/cloud',
+    desc: 'Background cloud tasks connected to GitHub repositories.',
+    url: 'https://developers.openai.com/codex/cloud',
+  },
+];
+
 const COMMUNITY: Link[] = [
   {
     title: 'Anthropic Discord',
@@ -84,6 +112,7 @@ export default function ResourcesPage() {
       />
 
       <LinkGroup title="Official &mdash; Anthropic docs" kicker="primary sources" links={OFFICIAL} />
+      <LinkGroup title="Official &mdash; OpenAI Codex docs" kicker="primary sources" links={CODEX} />
       <LinkGroup title="Community" kicker="discussion & ecosystem" links={COMMUNITY} />
       <LinkGroup title="Plans &amp; scheduling" kicker="upgrade & automation" links={PLANS} />
       <LinkGroup title="About" kicker="who wrote this" links={INTERNAL} />

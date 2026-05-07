@@ -1,7 +1,9 @@
+import type { ReactNode } from 'react';
+
 export interface CompareRow {
-  label: React.ReactNode;
-  left: React.ReactNode;
-  right: React.ReactNode;
+  label: ReactNode;
+  left: ReactNode;
+  right: ReactNode;
 }
 
 export function CompareTable({
@@ -14,24 +16,31 @@ export function CompareTable({
   rows: CompareRow[];
 }) {
   return (
-    <div className="glass-card rounded-[var(--radius-lg)] overflow-hidden my-4">
-      <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_minmax(0,1.3fr)] text-xs font-[family-name:var(--font-display)] uppercase tracking-[0.08em] border-b border-[var(--color-border)]">
-        <div className="px-4 py-3 text-[#555]">&nbsp;</div>
-        <div className="px-4 py-3 text-[#888] border-l border-[var(--color-border)]">{leftHeader}</div>
-        <div className="px-4 py-3 text-[color:var(--color-primary)] border-l border-[var(--color-border)]">{rightHeader}</div>
-      </div>
-      {rows.map((row, i) => (
-        <div
-          key={i}
-          className={`grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_minmax(0,1.3fr)] text-sm font-[family-name:var(--font-body)] ${
-            i > 0 ? 'border-t border-[var(--color-border)]' : ''
-          }`}
-        >
-          <div className="px-4 py-3 text-[#aaa] font-semibold">{row.label}</div>
-          <div className="px-4 py-3 text-[#ccc] border-l border-[var(--color-border)] leading-relaxed">{row.left}</div>
-          <div className="px-4 py-3 text-[#ccc] border-l border-[var(--color-border)] leading-relaxed">{row.right}</div>
-        </div>
-      ))}
+    <div className="glass-card rounded-[var(--radius-lg)] overflow-x-auto my-4">
+      <table className="min-w-[720px] w-full border-collapse text-sm font-[family-name:var(--font-body)]">
+        <thead>
+          <tr className="border-b border-[var(--color-border)]">
+            <th className="w-[25%] px-4 py-3 text-left font-[family-name:var(--font-display)] text-xs uppercase tracking-[0.08em] text-[#555]">
+              Decision point
+            </th>
+            <th className="w-[37.5%] px-4 py-3 text-left align-top border-l border-[var(--color-border)] font-[family-name:var(--font-display)] text-xs uppercase tracking-[0.08em] text-[#888]">
+              {leftHeader}
+            </th>
+            <th className="w-[37.5%] px-4 py-3 text-left align-top border-l border-[var(--color-border)] font-[family-name:var(--font-display)] text-xs uppercase tracking-[0.08em] text-[color:var(--color-primary)]">
+              {rightHeader}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} className="border-b border-[var(--color-border)] last:border-b-0">
+              <th className="px-4 py-3 text-left align-top text-[#aaa] font-semibold">{row.label}</th>
+              <td className="px-4 py-3 align-top text-[#ccc] border-l border-[var(--color-border)] leading-relaxed">{row.left}</td>
+              <td className="px-4 py-3 align-top text-[#ccc] border-l border-[var(--color-border)] leading-relaxed">{row.right}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

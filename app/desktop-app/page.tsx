@@ -395,12 +395,20 @@ export default function DesktopAppPage() {
         <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[#555] mb-2">
           Next
         </div>
-        <Link
-          href="/first-session"
-          className="font-[family-name:var(--font-display)] font-bold text-lg text-white hover:text-[color:var(--color-primary)] transition-colors"
-        >
-          Your first session &rarr;
-        </Link>
+        <div className="flex flex-wrap gap-4">
+          <Link
+            href="/first-session"
+            className="font-[family-name:var(--font-display)] font-bold text-lg text-white hover:text-[color:var(--color-primary)] transition-colors"
+          >
+            Your first session &rarr;
+          </Link>
+          <Link
+            href="/app-vs-cli"
+            className="font-[family-name:var(--font-display)] font-bold text-lg text-[#888] hover:text-white transition-colors"
+          >
+            App vs CLI vs IDE &rarr;
+          </Link>
+        </div>
       </section>
     </>
   );

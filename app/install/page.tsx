@@ -160,6 +160,13 @@ export default function InstallPage() {
             },
           ]}
         />
+        <Callout variant="info" title="Looking across Claude Code and Codex?">
+          Use the broader{' '}
+          <Link href="/app-vs-cli" className="text-[color:var(--color-primary)] hover:underline">
+            app vs CLI vs IDE guide
+          </Link>{' '}
+          when you are choosing between both products, not only between Claude Code surfaces.
+        </Callout>
       </section>
 
       <section className="mt-12 space-y-5">
@@ -227,7 +234,7 @@ export default function InstallPage() {
           Both options run the same AI. The UI is the only difference. Each tour shows what you see and what every
           key or click does &mdash; pick the one that matches where you&apos;ll spend your time.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
           <Link
             href="/terminal"
             className="glass-card rounded-[var(--radius-md)] p-5 block group hover:border-[color:var(--color-primary)]/30"
@@ -251,6 +258,18 @@ export default function InstallPage() {
               Windows, tabs, visual diffs &rarr;
             </div>
             <div className="text-[#888] text-xs">UI panels · parallel session tabs · drag-and-drop · session history</div>
+          </Link>
+          <Link
+            href="/claude-ide"
+            className="glass-card rounded-[var(--radius-md)] p-5 block group hover:border-[color:var(--color-primary)]/30"
+          >
+            <div className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.1em] uppercase text-[color:var(--tier-a)] mb-1">
+              IDE setup
+            </div>
+            <div className="font-[family-name:var(--font-display)] font-bold text-white text-lg mb-1 group-hover:text-[color:var(--color-primary)] transition-colors">
+              VS Code, forks, JetBrains &rarr;
+            </div>
+            <div className="text-[#888] text-xs">Integrated terminal · /ide · visual diffs · diagnostics</div>
           </Link>
         </div>
       </section>
